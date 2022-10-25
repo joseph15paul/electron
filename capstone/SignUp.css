@@ -1,0 +1,20 @@
+﻿
+.center {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+.right {
+    text-align: right;
+}
+
+.button-yellow{
+    background-color:papayawhip;
+}
+
+.textbox-border {
+    border-color : peru;
+}
+
+

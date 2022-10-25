@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ecom" Class="EcomDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=INL380;Initial Catalog=ecom;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ecomConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.mode" Member="modes">
+    <Type Name="mode">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="modeOfPay" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="mode_payment" Member="payments" ThisKey="id" OtherKey="modeID" Type="payment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.status" Member="status">
+    <Type Name="status">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="statusOfPay" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="status_payment" Member="payments" ThisKey="id" OtherKey="statusID" Type="payment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.password" Member="passwords">
+    <Type Name="password">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="passwordHash" Type="System.Data.Linq.Binary" DbType="Binary(64) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="salt" Type="System.Data.Linq.Binary" DbType="Binary(64) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="password_admin" Member="admins" ThisKey="id" OtherKey="passwordID" Type="admin" />
+      <Association Name="password_user1" Member="user1s" ThisKey="id" OtherKey="passwordID" Type="user1" />
+    </Type>
+  </Table>
+  <Table Name="dbo.address" Member="addresses">
+    <Type Name="address">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="address_line1" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="address_line2" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="pincode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="state" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="country" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="address_user1" Member="user1s" ThisKey="id" OtherKey="addressID" Type="user1" />
+    </Type>
+  </Table>
+  <Table Name="dbo.admin" Member="admins">
+    <Type Name="admin">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="passwordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="password_admin" Member="password" ThisKey="passwordID" OtherKey="id" Type="password" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.later" Member="laters">
+    <Type Name="later">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="productID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="user1_later" Member="user1" ThisKey="userID" OtherKey="userID" Type="user1" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Product_later" Member="Product" ThisKey="productID" OtherKey="id" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.shoppingSession" Member="shoppingSessions">
+    <Type Name="shoppingSession">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="user1_shoppingSession" Member="user1" ThisKey="userID" OtherKey="userID" Type="user1" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cart" Member="carts">
+    <Type Name="cart">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="productID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="user1_cart" Member="user1" ThisKey="userID" OtherKey="userID" Type="user1" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Product_cart" Member="Product" ThisKey="productID" OtherKey="id" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.offer" Member="offers">
+    <Type Name="offer">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="discountPercent" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="expiry" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Association Name="offer_Product" Member="Products" ThisKey="id" OtherKey="offerID" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[user]" Member="user1s">
+    <Type Name="user1">
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="firstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="addressID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="phone" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="passwordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="profilePicture" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="user1_later" Member="laters" ThisKey="userID" OtherKey="userID" Type="later" />
+      <Association Name="user1_shoppingSession" Member="shoppingSessions" ThisKey="userID" OtherKey="userID" Type="shoppingSession" />
+      <Association Name="user1_cart" Member="carts" ThisKey="userID" OtherKey="userID" Type="cart" />
+      <Association Name="user1_order" Member="orders" ThisKey="userID" OtherKey="userID" Type="order" />
+      <Association Name="address_user1" Member="address" ThisKey="addressID" OtherKey="id" Type="address" IsForeignKey="true" />
+      <Association Name="password_user1" Member="password" ThisKey="passwordID" OtherKey="id" Type="password" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.payment" Member="payments">
+    <Type Name="payment">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="modeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="statusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="payment_order" Member="orders" ThisKey="id" OtherKey="paymentID" Type="order" />
+      <Association Name="mode_payment" Member="mode" ThisKey="modeID" OtherKey="id" Type="mode" IsForeignKey="true" />
+      <Association Name="status_payment" Member="status" ThisKey="statusID" OtherKey="id" Type="status" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[order]" Member="orders">
+    <Type Name="order">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="paymentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="creation" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="order_OrderItem" Member="OrderItems" ThisKey="id" OtherKey="orderID" Type="OrderItem" />
+      <Association Name="payment_order" Member="payment" ThisKey="paymentID" OtherKey="id" Type="payment" IsForeignKey="true" />
+      <Association Name="user1_order" Member="user1" ThisKey="userID" OtherKey="userID" Type="user1" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="pic" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Category_Product" Member="Products" ThisKey="id" OtherKey="categoryId" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="categoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="offerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="picture" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Product_later" Member="laters" ThisKey="id" OtherKey="productID" Type="later" />
+      <Association Name="Product_cart" Member="carts" ThisKey="id" OtherKey="productID" Type="cart" />
+      <Association Name="Product_OrderItem" Member="OrderItems" ThisKey="id" OtherKey="productID" Type="OrderItem" />
+      <Association Name="Category_Product" Member="Category" ThisKey="categoryId" OtherKey="id" Type="Category" IsForeignKey="true" />
+      <Association Name="offer_Product" Member="offer" ThisKey="offerID" OtherKey="id" Type="offer" IsForeignKey="true" DeleteRule="SET DEFAULT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderItems" Member="OrderItems">
+    <Type Name="OrderItem">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="orderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="productID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="order_OrderItem" Member="order" ThisKey="orderID" OtherKey="id" Type="order" IsForeignKey="true" />
+      <Association Name="Product_OrderItem" Member="Product" ThisKey="productID" OtherKey="id" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,55 @@
+﻿.carouselSize {
+    height: 450px;
+}
+body{
+    background-color:lightsteelblue;
+}
+
+form {
+    background-color: lightsteelblue;
+}
+
+.bgCol {
+    background-color:aqua;
+}
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(0,78,119,1) 100%);
+}
+
+.card {
+    transition: transform 0.2s ease;
+    box-shadow: 5px 4px 6px 5px rgba(22, 22, 26, 0.18);
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 1.5em;
+}
+
+    .card:hover {
+        transform: scale(1.1);
+    }
+
+
+.item img {
+    height: 450px !important;
+    width: 850px !important;
+}
+
+
+.navbar-dark .nav-item .nav-link {
+    color: #fff;
+}
+
+    .navbar-dark .nav-item .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        border-radius: 0.25rem;
+        color: #fff;
+    }
+
+.fa-li {
+    position: relative;
+    left: 0;
+}
